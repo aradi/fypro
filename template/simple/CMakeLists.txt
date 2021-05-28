@@ -6,9 +6,9 @@ project(Simple
     HOMEPAGE_URL https://github.com/aradi/fypro
     LANGUAGES Fortran)
 
-include(GNUInstallDirs)
-
 string(TOLOWER "${PROJECT_NAME}" PROJECT_NAME_LOWER)
+
+include(GNUInstallDirs)
 set(INSTALL_INCLUDEDIR "${PROJECT_NAME_LOWER}")
 set(INSTALL_MODULEDIR "${INSTALL_INCLUDEDIR}/modfiles")
 
@@ -17,8 +17,9 @@ include(config.cmake)
 add_subdirectory(lib)
 add_subdirectory(prog)
 
-#enable_testing()
-#add_subdirectory(test)
+add_subdirectory(external/fytest/upstream)
+enable_testing()
+add_subdirectory(test)
 
 
 #
