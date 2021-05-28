@@ -6,8 +6,12 @@ project(Simple
     HOMEPAGE_URL https://github.com/aradi/fypro
     LANGUAGES Fortran)
 
-string(TOLOWER "${PROJECT_NAME}" PROJECT_NAME_LOWER)
 include(GNUInstallDirs)
+
+string(TOLOWER "${PROJECT_NAME}" PROJECT_NAME_LOWER)
+set(INSTALL_INCLUDEDIR "${PROJECT_NAME_LOWER}")
+set(INSTALL_MODULEDIR "${INSTALL_INCLUDEDIR}/modfiles")
+
 include(config.cmake)
 
 add_subdirectory(lib)
@@ -49,6 +53,7 @@ if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules)
 endif()
 
 list(TRANSFORM PKG_CONFIG_LIBS PREPEND "-l")
+set(PKG_CONFIG_CFLAGS "-I${CMAKE_INSTALL_FULL_INCLUDEDIR}/${INSTALL_MODULEDIR}")
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/cmake/export/${PROJECT_NAME_LOWER}.pc.in
     ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME_LOWER}.pc @ONLY)
