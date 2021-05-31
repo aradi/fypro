@@ -1,4 +1,4 @@
-module simple
+module ${project_name_lower}$
   implicit none
   
   private
@@ -19,4 +19,4 @@ contains
 
   end subroutine get_version
 
-end module simple
+end module ${project_name_lower}$

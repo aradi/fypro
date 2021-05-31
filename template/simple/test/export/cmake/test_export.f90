@@ -1,5 +1,5 @@
 program test_export
-  use simple, only : get_version
+  use ${project_name_lower}$, only : get_version
   implicit none
 
   integer :: major, minor, patch

@@ -1,3 +1,0 @@
-[submodule "external/fytest/upstream"]
-	path = external/fytest/upstream
-	url = https://github.com/aradi/fytest
