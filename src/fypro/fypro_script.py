@@ -1,4 +1,5 @@
-import sys
+"""Main driver routines for the fypro executable"""
+
 import os
 import io
 import shutil
@@ -52,13 +53,14 @@ def _main_new(args: argparse.Namespace):
     _create_project_dir(env["project_name_lower"])
     templatedir = os.path.join(SCRIPT_DIR, "template", args.template)
     projectdir = os.path.join(os.getcwd(), env["project_name_lower"])
-    print(f"TEMPLATE_DIR = {templatedir}")
     _copy_template_files(templatedir, projectdir, env)
     url = "https://github.com/aradi/fytest/archive/refs/heads/master.zip"
     _download_zip_archive(url, os.path.join(projectdir, "external"), "fytest-master", "fytest")
 
 
 def _create_project_dir(project_name: str):
+    """Creates the project directory"""
+    
     try:
         os.makedirs(project_name)
     except OSError as exc:
@@ -84,17 +86,19 @@ def _copy_template_files(templatedir: str, projectdir: str, env: Dict):
         for fname in files:
             srcpath = os.path.join(root, fname)
             trgpath = _get_target_path(
-                templatedir, projectdir,
-                os.path.join(root, fname.format(**env)))
+                templatedir, os.path.join(root, fname.format(**env)),
+                projectdir)
             with open(trgpath, "w") as fp:
                 fp.write(processor.process_file(srcpath))
         for dirname in dirs:
             srcpath = os.path.join(root, dirname)
-            trgpath = _get_target_path(templatedir, projectdir, srcpath)
+            trgpath = _get_target_path(templatedir, srcpath, projectdir)
             os.makedirs(trgpath)
 
 
-def _download_zip_archive(url, targetdir, origname, targetname):
+def _download_zip_archive(url: str, targetdir: str, origname: str,
+                          targetname: str):
+    """Downloads a zip-archive and extracts it."""
     with urllib.request.urlopen(url) as ff:
         archive = zipfile.ZipFile(io.BytesIO(ff.read()))
     archive.extractall(targetdir)
@@ -102,7 +106,7 @@ def _download_zip_archive(url, targetdir, origname, targetname):
         os.path.join(targetdir, origname),
         os.path.join(targetdir, targetname))
 
-    
 
-def _get_target_path(sourcedir: str, targetdir: str, sourcepath: str) -> str:
+def _get_target_path(sourcedir: str, sourcepath: str, targetdir: str) -> str:
+    """Adds the relative path difference between two folders to a third one."""
     return os.path.join(targetdir, os.path.relpath(sourcepath, sourcedir))
