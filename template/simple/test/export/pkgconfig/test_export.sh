@@ -14,7 +14,7 @@
 #     the installed library tree.
 #
 SCRIPT_DIR=$(dirname $0)
-PROJECT_NAME="${project_name}$"
+PROJECT_NAME="${project_name_lower}$"
 
 [ -n "${FC}" ] \
     || { echo "Fortran compiler (enviroment variable FC) unspecified"; exit 1; }
