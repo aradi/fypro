@@ -25,6 +25,7 @@ cd build
 cmake ../../myproject -G Ninja -DCMAKE_INSTALL_PREFIX=${PWD}/../install
 ninja
 ninja install
+ctest
 cd ..
 
 mkdir cmake
