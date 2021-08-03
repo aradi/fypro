@@ -1,0 +1,38 @@
+name: CI
+on: [push, pull_request]
+
+#env:
+
+jobs:
+  test-new:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+
+    - name: Install requirements (PIP)
+      run: pip3 install cmake ninja fypp
+
+    - name: Set Compiler (Linux)
+      if: contains(matrix.os, 'ubuntu')
+      run: |
+        echo "FC=gfortran" >> $GITHUB_ENV
+        echo "CC=gcc" >> $GITHUB_ENV
+
+    - name: Set Compiler (OSX)
+      if: contains(matrix.os, 'macos')
+      run: |
+        echo "FC=gfortran-9" >> $GITHUB_ENV
+        echo "CC=gcc-9" >> $GITHUB_ENV
+
+    - name: Run test
+      run: ./test/test_new_project.sh

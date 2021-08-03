@@ -60,7 +60,7 @@ def _main_new(args: argparse.Namespace):
 
 def _create_project_dir(project_name: str):
     """Creates the project directory"""
-    
+
     try:
         os.makedirs(project_name)
     except OSError as exc:
@@ -90,6 +90,7 @@ def _copy_template_files(templatedir: str, projectdir: str, env: Dict):
                 projectdir)
             with open(trgpath, "w") as fp:
                 fp.write(processor.process_file(srcpath))
+            shutil.copymode(srcpath, trgpath)
         for dirname in dirs:
             srcpath = os.path.join(root, dirname)
             trgpath = _get_target_path(templatedir, srcpath, projectdir)

@@ -17,7 +17,7 @@ SCRIPT_DIR=$(dirname $0)
 PROJECT_NAME="${project_name_lower}$"
 
 [ -n "${FC}" ] \
-    || { echo "Fortran compiler (enviroment variable FC) unspecified"; exit 1; }
+    || { echo "Fortran compiler (enviroment variable FC) unspecified" >&2; exit 1; }
 
 pkg-config --exists ${PROJECT_NAME} \
     || { echo "No PKG-CONFIG found for ${PROJECT_NAME}" >&2; exit 1; }
@@ -25,7 +25,7 @@ pkg-config --exists ${PROJECT_NAME} \
 cflags=$(pkg-config --cflags ${PROJECT_NAME})
 libs=$(pkg-config --libs ${PROJECT_NAME})
 
-cmd="${FC} ${cflags} -o test_export.f90 ${SCRIPT_DIR}/test_export.f90 ${libs}"
+cmd="${FC} ${cflags} -o test_export ${SCRIPT_DIR}/test_export.f90 ${libs}"
 
 echo "Build command: ${cmd}"
 ${cmd} \
