@@ -2,6 +2,10 @@
 FyPro: Fortran project generator
 ********************************
 
+**NOTE**: This project is not maintained any more. Please consider to use the
+(actively maintained) `cookiecutter-fortran-cmake
+<https://github.com/aradi/cookiecutter-fortran-cmake>`_ project instead.
+
 FyPro generates a fully functional minimal Fortran project including
 a library, an application and the test infrastructure. Currently it supports
 the `CMake <https://cmake.org/>`_ build framework and the `FyTest
